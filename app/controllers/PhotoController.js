@@ -11,6 +11,7 @@ export default class PhotoController {
             .get('', this.getAllPhotos)
             .get('/:id', this.getPhotoById)
             .put('/:id', this.editPhoto)
+            .put('/:id/comments', this.commentsRoute)
             .post('', this.createPhoto)
             .delete('/:id', this.deletePhoto)
             .use('*', this.defaultRoute)
@@ -39,6 +40,16 @@ export default class PhotoController {
     async deletePhoto(req, res, next) {
 
     }
+
+    async commentsRoute(req, res, next) {
+        try {
+            let photo = await _service.commentsRoute(req.params.id, req.body) 
+            return res.status(200).send(photo)
+        } catch (error) {
+            next(error)
+        }
+    }
+
     defaultRoute(req, res, next) {
 
     }
